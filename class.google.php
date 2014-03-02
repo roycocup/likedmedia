@@ -30,6 +30,16 @@ class Goo {
 		$this->init();
 	}
 
+	public function getClient(){
+		$this->client = new Google_Client();
+		$this->client->setApplicationName("Calendar Demo with Google API");
+		$this->client->setClientId($this->_config->getCred('ID'));
+		$this->client->setClientSecret($this->_config->getCred('secret'));
+		$this->client->setRedirectUri($this->_config->getCred('callback'));
+		$this->client->setDeveloperKey($this->_config->getCred('dev-key'));
+		$this->client->setScopes(array('https://www.googleapis.com/auth/calendar',));
+	}
+
 	public function getAuthUrl(){
 		return $this->_authUrl; 
 	}
@@ -47,38 +57,29 @@ class Goo {
 	}
 
 
-	public function getClient(){
-		$this->client = new Google_Client();
-		$this->client->setApplicationName("Calendar Demo with Google API");
-		$this->client->setClientId($this->_config->getCred('ID'));
-		$this->client->setClientSecret($this->_config->getCred('secret'));
-		$this->client->setRedirectUri($this->_config->getCred('callback'));
-		$this->client->setDeveloperKey($this->_config->getCred('dev-key'));
-		// $this->client->setScopes(array('https://www.googleapis.com/auth/calendar',));
-	}
-
-
 	public function authenticate($code){
 		//get the app code and exchange it for the oauth token
-		$this->client->authenticate($_GET['code']);
+		$this->client->authenticate($code);
 		$_SESSION['token'] = $this->_token = $this->client->getAccessToken();
 
+	}
+
+	public function setToken(){
 		if (isset($_SESSION['token'])) {
 			$this->client->setAccessToken($_SESSION['token']);
 			return true;
 		}
 
 		return false;
-
 	}
 
 
 	public function getCalList(){
 		$calList = $this->cal->calendarList->listCalendarList();
-		$str = "<h1>Calendar List</h1><pre>" . print_r($calList, true) . "</pre>";
-		return $str;
-		// $_SESSION['token'] = $this->client->getAccessToken();
+		return $calList; 
 	}
+
+
 	
 
 }
