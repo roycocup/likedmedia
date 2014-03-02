@@ -20,7 +20,7 @@ if (isset($_GET['code'])) {
 }
 
 if ($authenticated){
-	header('Location: http://' . $_SERVER['HTTP_HOST'] . "/cal.php");
+	header('Location: http://' . $_SERVER['HTTP_HOST'] . "/cal.php??PHPSESSID=".session_id()");
 }
 
 
