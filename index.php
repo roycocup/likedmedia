@@ -44,6 +44,7 @@ if ($authenticated){
 	
 </head>
 <body>
+<?php var_dump($_SESSION); ?>
 	<?php if (empty($_SESSION)): ?>
 		<?php if (!empty($authUrl)): ?>
 			<div class="jumbotron">
@@ -61,9 +62,7 @@ if ($authenticated){
 			<div class="h1 text-center">Welcome to the calendar app</div>
 			<div class="h3">This is a tiny application just to show that I can actually plug into the google API and move things around</div>	
 			<div>
-				here
 				<?php var_dump($goo->getCalList()); ?>
-				there
 			</div>
 		</div>
 	<?php endif; ?>
