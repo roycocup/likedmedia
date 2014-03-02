@@ -6,6 +6,8 @@ require 'class.google.php';
 $goo = new Goo();
 $goo->authenticate();
 
+$authUrl = $goo->getAuthUrl(); 
+
 
 ?>
 
@@ -35,8 +37,8 @@ $goo->authenticate();
 			<p>This is a simple app that enables you to see your google calendar</p>
 			<p><a class="btn btn-primary btn-lg" role="button">Begin!</a></p>
 		<?php else: ?>
-			<h1>Well this is not working too well is it?</h1>
-			<p>If you can't see a button below, that because something that should be working is not.... </p>
+			<h1>Sorry...</h1>
+			<p>If you can't see a button below, its because something is not working.... </p>
 		<?php endif; ?>
 
 	</div>

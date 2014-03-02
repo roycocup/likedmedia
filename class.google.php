@@ -23,6 +23,10 @@ class Goo {
 		$this->_config = new Config();
 	}
 
+	public function getAuthUrl(){
+		return $this->_authUrl; 
+	}
+
 
 	public function getClient(){
 		$client = new Google_Client();
@@ -66,7 +70,7 @@ class Goo {
 			$_SESSION['token'] = $client->getAccessToken();
 		} else {
 			
-			$this->authUrl = $client->createAuthUrl();
+			$this->_authUrl = $client->createAuthUrl();
 		}
 
 	}
