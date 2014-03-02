@@ -27,7 +27,11 @@ class Goo {
 	public function authenticate(){
 		$client = $this->getClient();
 		$service = new Google_Service_Calendar($client);
-		$t = $client->authenticate($this->config->getCred('dev-key'));
+
+		var_dump($_REQUEST); 
+		die;
+
+		$client->authenticate();
 
 		var_dump($t); die;
 
