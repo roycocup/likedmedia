@@ -13,18 +13,15 @@ if (isset($_GET['logout'])) {
 	unset($_SESSION['token']);
 }
 
-
+$authenticated = false;
 if (isset($_GET['code'])) {
-	var_dump($goo->authenticate($_GET['code']));
-	die;
+	$authenticated = $goo->authenticate($_GET['code']);
 }
 
-//get the app code and exchange it for the oauth token
-// if (isset($_GET['code'])) {
-// 	$client->authenticate($_GET['code']);
-// 	$_SESSION['token'] = $this->_token = $client->getAccessToken();
-// 	// header('Location: http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']);
-// }
+if ($authenticated){
+	header('Location: http://' . $_SERVER['HTTP_HOST'] . "/cal");
+}
+
 
 
 ?>

@@ -65,22 +65,21 @@ class Goo {
 		//get the app code and exchange it for the oauth token
 		$this->client->authenticate($_GET['code']);
 		$_SESSION['token'] = $this->_token = $this->client->getAccessToken();
-		//header('Location: http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']);
 
 		if (isset($_SESSION['token'])) {
 			$this->client->setAccessToken($_SESSION['token']);
+			return true;
 		}
 
-		//if I cant get an access token yet
-		// if ($this->client->getAccessToken()) {
-			//$calList = $cal->calendarList->listCalendarList();
-			// print "<h1>Calendar List</h1><pre>" . print_r($calList, true) . "</pre>";
-			//$_SESSION['token'] = $this->client->getAccessToken();
-		// } else {
-			//$this->_authUrl = $this->client->createAuthUrl();
-		// }
-		return $this->_token;
+		return false;
 
+	}
+
+
+	public function getCalList(){
+		$calList = $cal->calendarList->listCalendarList();
+		print "<h1>Calendar List</h1><pre>" . print_r($calList, true) . "</pre>";
+		$_SESSION['token'] = $this->client->getAccessToken();
 	}
 	
 
