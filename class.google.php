@@ -11,16 +11,23 @@ class Goo {
 	private $_config; 
 
 	//Authorizarion Url - endpoint for the initial request before getting the token.
-	private $_authUrl; 
+	private $_authUrl = ''; 
 
 	//the oauth token (also stored in session)
-	private $_token; 
+	private $_token = ''; 
+
+	//google client object
+	protected $client; 
+
+	//google calendar object
+	public $cal; 
 
 
 
 	//construct
 	public function __construct(){
 		$this->_config = new Config();
+		$this->init();
 	}
 
 	public function getAuthUrl(){
@@ -28,50 +35,51 @@ class Goo {
 	}
 
 
+	public function init(){
+		$this->getClient();
+		$this->cal = new Google_Service_Calendar($this->client);
+
+		if ($this->client->getAccessToken()){
+			$this->authenticate();
+		} else {
+			$this->_authUrl = $this->client->createAuthUrl();
+		}
+	}
+
+
 	public function getClient(){
-		$client = new Google_Client();
-		$client->setApplicationName("Calendar Demo with Google API");
-		$client->setClientId($this->_config->getCred('ID'));
-		$client->setClientSecret($this->_config->getCred('secret'));
-		$client->setRedirectUri($this->_config->getCred('callback'));
-		$client->setDeveloperKey($this->_config->getCred('dev-key'));
-		$client->setScopes(array(
+		$this->client = new Google_Client();
+		$this->client->setApplicationName("Calendar Demo with Google API");
+		$this->client->setClientId($this->_config->getCred('ID'));
+		$this->client->setClientSecret($this->_config->getCred('secret'));
+		$this->client->setRedirectUri($this->_config->getCred('callback'));
+		$this->client->setDeveloperKey($this->_config->getCred('dev-key'));
+		$this->client->setScopes(array(
 			'https://www.googleapis.com/auth/calendar', 
 			)
 		);
-		return $client;
 	}
 
-	public function authenticate(){
-		$client = $this->getClient();
-		$cal = new Google_Service_Calendar($client);
-
-		//get me out of here
-		if (isset($_GET['logout'])) {
-			unset($_SESSION['token']);
-		}
+	public function authenticate($code){
 
 		//get the app code and exchange it for the oauth token
-		if (isset($_GET['code'])) {
-			$client->authenticate($_GET['code']);
-			$_SESSION['token'] = $this->_token = $client->getAccessToken();
-			// header('Location: http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']);
-		}
-
+		$this->client->authenticate($_GET['code']);
+		$_SESSION['token'] = $this->_token = $this->client->getAccessToken();
+		header('Location: http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']);
 
 		if (isset($_SESSION['token'])) {
-			$client->setAccessToken($_SESSION['token']);
+			$this->client->setAccessToken($_SESSION['token']);
 		}
 
 		//if I cant get an access token yet
-		if ($client->getAccessToken()) {
-			$calList = $cal->calendarList->listCalendarList();
+		// if ($this->client->getAccessToken()) {
+			//$calList = $cal->calendarList->listCalendarList();
 			// print "<h1>Calendar List</h1><pre>" . print_r($calList, true) . "</pre>";
-			$_SESSION['token'] = $client->getAccessToken();
-		} else {
-			
-			$this->_authUrl = $client->createAuthUrl();
-		}
+			//$_SESSION['token'] = $this->client->getAccessToken();
+		// } else {
+			//$this->_authUrl = $this->client->createAuthUrl();
+		// }
+		return $this->_token;
 
 	}
 	

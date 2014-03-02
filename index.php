@@ -4,9 +4,27 @@ require 'class.google.php';
 
 
 $goo = new Goo();
-$goo->authenticate();
 
 $authUrl = $goo->getAuthUrl(); 
+
+
+//get me out of here
+if (isset($_GET['logout'])) {
+	unset($_SESSION['token']);
+}
+
+
+if (isset($_GET['code'])) {
+	var_dump($goo->authenticate($_GET['code']));
+	die;
+}
+
+//get the app code and exchange it for the oauth token
+// if (isset($_GET['code'])) {
+// 	$client->authenticate($_GET['code']);
+// 	$_SESSION['token'] = $this->_token = $client->getAccessToken();
+// 	// header('Location: http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']);
+// }
 
 
 ?>
@@ -35,7 +53,7 @@ $authUrl = $goo->getAuthUrl();
 		<?php if (!empty($authUrl)): ?>
 			<h1>Like Digital Media</h1>
 			<p>This is a simple app that enables you to see your google calendar</p>
-			<p><a class="btn btn-primary btn-lg" role="button">Begin!</a></p>
+			<p><a href="<?php echo $authUrl; ?>" class="btn btn-primary btn-lg" role="button">Begin!</a></p>
 		<?php else: ?>
 			<h1>Sorry...</h1>
 			<p>If you can't see a button below, its because something is not working.... </p>
