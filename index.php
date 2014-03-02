@@ -44,7 +44,12 @@ if ($authenticated){
 	
 </head>
 <body>
-<?php var_dump($_SESSION); ?>
+<?php 
+	// $_SESSION['token']['access_token'] =  'ya29.1.AADtN_Uez_O7MTOWZslvtVwPBHqskuZCoFFpkgbwZf6QznbIsfzKwafkCnnTToYm4JoqXw'; 
+	// $_SESSION['token']['token_type'] = 'Bearer';
+	// $_SESSION['token']['expires_in'] = 3599;
+	// $_SESSION['token']['created'] = 1393778107;
+?>
 	<?php if (empty($_SESSION)): ?>
 		<?php if (!empty($authUrl)): ?>
 			<div class="jumbotron">

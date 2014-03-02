@@ -77,7 +77,7 @@ class Goo {
 
 
 	public function getCalList(){
-		$calList = $cal->calendarList->listCalendarList();
+		$calList = $this->cal->calendarList->listCalendarList();
 		$str = "<h1>Calendar List</h1><pre>" . print_r($calList, true) . "</pre>";
 		return $str;
 		// $_SESSION['token'] = $this->client->getAccessToken();
