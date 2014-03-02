@@ -17,6 +17,7 @@ class Goo {
 
 	public function getClient(){
 		$client = new Google_Client();
+		$client->setApplicationName("Calendar Demo with Google API");
 		$client->setClientId($this->config->getCred('ID'));
 		$client->setClientSecret($this->config->getCred('secret'));
 		$client->setRedirectUri($this->config->getCred('callback'));
@@ -27,22 +28,47 @@ class Goo {
 	public function authenticate(){
 		$client = $this->getClient();
 		$service = new Google_Service_Calendar($client);
+		if (isset($_REQUEST['logout'])) {
+			unset($_SESSION['access_token']);
+		}
 
-		var_dump($_REQUEST); 
-		die;
+		if (isset($_GET['code'])) {
+			$client->authenticate($_GET['code']);
+			$_SESSION['access_token'] = $client->getAccessToken();
+			header('Location: http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']);
+		}
 
-		$client->authenticate();
+		if (isset($_SESSION['access_token'])) {
+			$client->setAccessToken($_SESSION['access_token']);
+		}
 
-		var_dump($t); die;
+		if ($client->getAccessToken()) {
+			$me = $plus->people->get('me');
 
-		if (isset($_SESSION['oauth_access_token'])) {
-            $client->setAccessToken($_SESSION['oauth_access_token']);
-        } else {
-            $token = $client->authenticate();
-            var_dump($token); die; 
-            $_SESSION['oauth_access_token'] = $token;
-        }
+			// These fields are currently filtered through the PHP sanitize filters.
+			// See http://www.php.net/manual/en/filter.filters.sanitize.php
+			$url = filter_var($me['url'], FILTER_VALIDATE_URL);
+			$img = filter_var($me['image']['url'], FILTER_VALIDATE_URL);
+			$name = filter_var($me['displayName'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+			$personMarkup = "<a rel='me' href='$url'>$name</a><div><img src='$img'></div>";
 
+			$optParams = array('maxResults' => 100);
+			$activities = $plus->activities->listActivities('me', 'public', $optParams);
+			$activityMarkup = '';
+			foreach($activities['items'] as $activity) {
+		    // These fields are currently filtered through the PHP sanitize filters.
+		    // See http://www.php.net/manual/en/filter.filters.sanitize.php
+				$url = filter_var($activity['url'], FILTER_VALIDATE_URL);
+				$title = filter_var($activity['title'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+				$content = filter_var($activity['object']['content'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+				$activityMarkup .= "<div class='activity'><a href='$url'>$title</a><div>$content</div></div>";
+			}
+
+  			// The access token may have been updated lazily.
+			$_SESSION['access_token'] = $client->getAccessToken();
+		} else {
+			$authUrl = $client->createAuthUrl();
+		}
 		
 	}
 
