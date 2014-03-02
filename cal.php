@@ -24,7 +24,10 @@ var_dump($_SESSION);
 	
 </head>
 <body>
-	<div class="h1">Welcome to the calendar app</div>
-	<div class="h3">This is a tiny application just to show that I can actually plug into the google API and move things around</div>
+	<div class="container">
+		<div class="h1">Welcome to the calendar app</div>
+		<div class="h3">This is a tiny application just to show that I can actually plug into the google API and move things around</div>	
+	</div>
+	
 </body>
 </html>
