@@ -1,6 +1,6 @@
 <?php 
-session_id($_GET['PHPSESSID']);
-session_start();
+// session_id($_GET['PHPSESSID']);
+// session_start();
 var_dump($_SESSION);
 
 require 'class.google.php';
