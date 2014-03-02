@@ -3,7 +3,6 @@
 set_include_path("google-api-php-client-master/src/" . PATH_SEPARATOR . get_include_path());
 require_once('class.config.php');
 require_once 'Google/Client.php';
-require_once 'Google/Service/Urlshortener.php';
 require_once 'Google/Service/Calendar.php';
 
 class Goo {
@@ -17,9 +16,9 @@ class Goo {
 
 
 	public function getClient(){
-		$client_id = '699975976929.apps.googleusercontent.com';
-		$client_secret = '-SHbDcMUZ5xXvVW2xIaJ6jrV';
-		$redirect_uri = 'http://localhost/';
+		$client_id = $this->config->getCred('ID');
+		$client_secret = $this->config->getCred('secret');
+		$redirect_uri = $this->config->getCred('callback');
 		$client = new Google_Client();
 		$client->setClientId($client_id);
 		$client->setClientSecret($client_secret);
@@ -31,6 +30,9 @@ class Goo {
 	public function authenticate(){
 		$client = $this->getClient();
 		$service = new Google_Service_Calendar($client);
+
+		var_dump($service); die;
+
 		if (isset($_SESSION['oauth_access_token'])) {
             $client->setAccessToken($_SESSION['oauth_access_token']);
         } else {
@@ -43,10 +45,6 @@ class Goo {
 	}
 
 }
-
-
-$t = new Goo();
-$t->authenticate();
 
 
 
