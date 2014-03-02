@@ -1,5 +1,5 @@
 <?php
-session_id();
+session_start();
 
 require 'class.google.php';
 
@@ -20,7 +20,7 @@ if (isset($_GET['code'])) {
 }
 
 if ($authenticated){
-	header('Location: http://' . $_SERVER['HTTP_HOST'] . "/cal.php??PHPSESSID=".session_id());
+	header('Location: http://' . $_SERVER['HTTP_HOST'] . "/cal.php?PHPSESSID=".session_id());
 }
 
 
