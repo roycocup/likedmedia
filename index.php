@@ -2,16 +2,18 @@
 require_once 'google-api-php-client-master/src/Google_Client.php';
 require_once 'google-api-php-client-master/src/contrib/Google_CalendarService.php';
 session_start();
+error_reporting(E_ALL); 
+ini_set( 'display_errors','1');
 
 $client = new Google_Client();
 $client->setApplicationName("Google Calendar PHP Starter Application");
 
 // Visit https://code.google.com/apis/console?api=calendar to generate your
 // client id, client secret, and to register your redirect uri.
-// $client->setClientId('insert_your_oauth2_client_id');
-// $client->setClientSecret('insert_your_oauth2_client_secret');
-// $client->setRedirectUri('insert_your_oauth2_redirect_uri');
-// $client->setDeveloperKey('insert_your_developer_key');
+$client->setClientId('699975976929.apps.googleusercontent.com');
+$client->setClientSecret('-SHbDcMUZ5xXvVW2xIaJ6jrV');
+$client->setRedirectUri('http://likedmedia.rodderscode.co.uk');
+$client->setDeveloperKey('AIzaSyDPf-yxc-KOVzy8765STLmUAlPdrRtd6I8');
 $cal = new Google_CalendarService($client);
 if (isset($_GET['logout'])) {
   unset($_SESSION['token']);
