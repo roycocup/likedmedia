@@ -60,8 +60,8 @@ class Goo {
 		);
 	}
 
-	public function authenticate($code){
 
+	public function authenticate($code){
 		//get the app code and exchange it for the oauth token
 		$this->client->authenticate($_GET['code']);
 		$_SESSION['token'] = $this->_token = $this->client->getAccessToken();

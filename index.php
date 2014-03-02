@@ -23,7 +23,6 @@ if ($authenticated){
 }
 
 
-
 ?>
 
 <html>
@@ -60,6 +59,9 @@ if ($authenticated){
 		<div class="container">
 			<div class="h1 text-center">Welcome to the calendar app</div>
 			<div class="h3">This is a tiny application just to show that I can actually plug into the google API and move things around</div>	
+			<div>
+				<?php echo $goo->getCalList(); ?>
+			</div>
 		</div>
 	<?php endif; ?>
 </body>
