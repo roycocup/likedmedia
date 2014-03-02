@@ -19,14 +19,12 @@ if (isset($_GET['code'])) {
 }
 
 if ($authenticated){
-	header('Location: http://' . $_SERVER['HTTP_HOST'] . "/cal");
+	header('Location: http://' . $_SERVER['HTTP_HOST'] . "/cal.php");
 }
 
 
 
 ?>
-
-
 
 <html>
 <head>
