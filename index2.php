@@ -14,6 +14,8 @@ $client->setClientSecret('-SHbDcMUZ5xXvVW2xIaJ6jrV');
 $client->setRedirectUri('http://likedmedia.rodderscode.co.uk');
 $client->setDeveloperKey('AIzaSyDPf-yxc-KOVzy8765STLmUAlPdrRtd6I8');
 $cal = new Google_Service_Calendar($client);
+
+
 if (isset($_GET['logout'])) {
 	unset($_SESSION['token']);
 }

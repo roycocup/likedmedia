@@ -54,10 +54,7 @@ class Goo {
 		$this->client->setClientSecret($this->_config->getCred('secret'));
 		$this->client->setRedirectUri($this->_config->getCred('callback'));
 		$this->client->setDeveloperKey($this->_config->getCred('dev-key'));
-		$this->client->setScopes(array(
-			'https://www.googleapis.com/auth/calendar', 
-			)
-		);
+		// $this->client->setScopes(array('https://www.googleapis.com/auth/calendar',));
 	}
 
 
