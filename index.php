@@ -1,4 +1,5 @@
 <?php
+session_id();
 
 require 'class.google.php';
 
