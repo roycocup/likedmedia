@@ -30,8 +30,9 @@ class Goo {
 	public function authenticate(){
 		$client = $this->getClient();
 		$service = new Google_Service_Calendar($client);
+		$t = $client->authenticate();
 
-		var_dump($service); die;
+		var_dump($t); die;
 
 		if (isset($_SESSION['oauth_access_token'])) {
             $client->setAccessToken($_SESSION['oauth_access_token']);
