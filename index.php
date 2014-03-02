@@ -44,20 +44,23 @@ if ($authenticated){
 	
 </head>
 <body>
-	<?php if (!empty($authUrl) && empty($_SESSION)): ?>
-		<div class="jumbotron">
-			<h1>Like Digital Media</h1>
-			<p>This is a simple app that enables you to see your google calendar</p>
-			<p><a href="<?php echo $authUrl; ?>" class="btn btn-primary btn-lg" role="button">Begin!</a></p>
-		<?php elseif(empty($_SESSION)): ?>
-			<h1>Sorry...</h1>
-			<p>If you can't see a button below, its because something is not working.... </p>
+	<?php if (empty($_SESSION)): ?>
+		<?php if (!empty($authUrl)): ?>
+			<div class="jumbotron">
+				<h1>Like Digital Media</h1>
+				<p>This is a simple app that enables you to see your google calendar</p>
+				<p><a href="<?php echo $authUrl; ?>" class="btn btn-primary btn-lg" role="button">Begin!</a></p>
+			<?php elseif(empty($_SESSION)): ?>
+				<h1>Sorry...</h1>
+				<p>If you can't see a button below, its because something is not working.... </p>
+			</div>
+		<?php endif; ?>
+
+	<?php else: ?>
+		<div class="container">
+			<div class="h1 text-center">Welcome to the calendar app</div>
+			<div class="h3">This is a tiny application just to show that I can actually plug into the google API and move things around</div>	
 		</div>
 	<?php endif; ?>
-
-	<div class="container">
-		<div class="h1 text-center">Welcome to the calendar app</div>
-		<div class="h3">This is a tiny application just to show that I can actually plug into the google API and move things around</div>	
-	</div>
 </body>
 </html>
