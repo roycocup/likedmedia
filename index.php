@@ -49,7 +49,7 @@ if ($authenticated){
 			<h1>Like Digital Media</h1>
 			<p>This is a simple app that enables you to see your google calendar</p>
 			<p><a href="<?php echo $authUrl; ?>" class="btn btn-primary btn-lg" role="button">Begin!</a></p>
-		<?php else: ?>
+		<?php elseif(empty($_SESSION)): ?>
 			<h1>Sorry...</h1>
 			<p>If you can't see a button below, its because something is not working.... </p>
 		</div>
