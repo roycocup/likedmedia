@@ -20,6 +20,7 @@ if (isset($_GET['code'])) {
 }
 
 if ($authenticated){
+	var_dump($_SESSION); die;
 	header('Location: http://' . $_SERVER['HTTP_HOST'] . "/cal.php");
 }
 
