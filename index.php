@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 require 'class.google.php';
 
 
@@ -20,8 +19,7 @@ if (isset($_GET['code'])) {
 }
 
 if ($authenticated){
-	// header('Location: http://' . $_SERVER['HTTP_HOST'] . "/cal.php?PHPSESSID=".session_id());
-	header('Location: http://' . $_SERVER['HTTP_HOST'] . "/cal.php");
+	header('Location: http://' . $_SERVER['HTTP_HOST']);
 }
 
 
@@ -46,16 +44,20 @@ if ($authenticated){
 	
 </head>
 <body>
-	<div class="jumbotron">
-		<?php if (!empty($authUrl)): ?>
+	<?php if (!empty($authUrl) && empty($_SESSION)): ?>
+		<div class="jumbotron">
 			<h1>Like Digital Media</h1>
 			<p>This is a simple app that enables you to see your google calendar</p>
 			<p><a href="<?php echo $authUrl; ?>" class="btn btn-primary btn-lg" role="button">Begin!</a></p>
 		<?php else: ?>
 			<h1>Sorry...</h1>
 			<p>If you can't see a button below, its because something is not working.... </p>
-		<?php endif; ?>
+		</div>
+	<?php endif; ?>
 
+	<div class="container">
+		<div class="h1 text-center">Welcome to the calendar app</div>
+		<div class="h3">This is a tiny application just to show that I can actually plug into the google API and move things around</div>	
 	</div>
 </body>
 </html>

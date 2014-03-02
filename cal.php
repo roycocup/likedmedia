@@ -1,9 +1,8 @@
 <?php 
-//session_id($_GET['PHPSESSID']);
-session_start();
-var_dump($_SESSION);
 
+session_start();
 require 'class.google.php';
+
 
 
 
@@ -28,10 +27,7 @@ require 'class.google.php';
 	
 </head>
 <body>
-	<div class="container">
-		<div class="h1 text-center">Welcome to the calendar app</div>
-		<div class="h3">This is a tiny application just to show that I can actually plug into the google API and move things around</div>	
-	</div>
+	
 	
 </body>
 </html>
