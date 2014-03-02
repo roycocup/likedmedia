@@ -1,9 +1,10 @@
 <?php
-require_once 'google-api-php-client-master/src/Google_Client.php';
-require_once 'google-api-php-client-master/src/contrib/Google_CalendarService.php';
-session_start();
 error_reporting(E_ALL); 
 ini_set( 'display_errors','1');
+require_once 'google-api-php-client-master/src/Google/Client.php';
+require_once 'google-api-php-client-master/src/Google/Service/Calendar.php';
+session_start();
+
 
 $client = new Google_Client();
 $client->setApplicationName("Google Calendar PHP Starter Application");
