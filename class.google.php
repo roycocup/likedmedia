@@ -16,21 +16,18 @@ class Goo {
 
 
 	public function getClient(){
-		$client_id = $this->config->getCred('ID');
-		$client_secret = $this->config->getCred('secret');
-		$redirect_uri = $this->config->getCred('callback');
 		$client = new Google_Client();
-		$client->setClientId($client_id);
-		$client->setClientSecret($client_secret);
-		$client->setRedirectUri($redirect_uri);
-		$client->setDeveloperKey('AIzaSyDPf-yxc-KOVzy8765STLmUAlPdrRtd6I8');
+		$client->setClientId($this->config->getCred('ID'));
+		$client->setClientSecret($this->config->getCred('secret'));
+		$client->setRedirectUri($this->config->getCred('callback'));
+		$client->setDeveloperKey($this->config->getCred('dev-key'));
 		return $client;
 	}
 
 	public function authenticate(){
 		$client = $this->getClient();
 		$service = new Google_Service_Calendar($client);
-		$t = $client->authenticate();
+		$t = $client->authenticate($this->config->getCred('dev-key'));
 
 		var_dump($t); die;
 
